@@ -34,55 +34,72 @@ class Node
 end
 
 def build_tree(array, parent = nil, derection = nil, tree = [])
-  print "#{array} size=#{array.size}  parent=#{parent} dir=#{derection}"
-  puts
+  #print "#{array} size=#{array.size}  parent=#{parent} dir=#{derection}"
+  #puts
   
   if array.size == 2
     if derection == :left or derection == nil
       name_node = array[1]
-      left_child = array[0]
+      left_child = Node.new(array[0], name_node)
       right_child = nil
 	else
 	  name_node = array[0]
       left_child = nil
-      right_child = array[1]	  
+      right_child = Node.new(array[1], name_node)	  
 	end
-    tree << Node.new(name_node, parent, left_child, right_child)
-	tree << Node.new(left_child, name_node) unless left_child == nil
-	tree << Node.new(right_child, name_node) unless right_child == nil
+    node = Node.new(name_node, parent, left_child, right_child)
+	$tree = node
+	$tree << left_child unless left_child == nil
+	$tree << left_child unless right_child == nil
+	return node
   end
   
   if array.size == 3
     name_node = array[1]
-    left_child = array[0]
-    right_child = array[2]
-    tree << Node.new(name_node, parent, left_child, right_child)
-	tree << Node.new(left_child, name_node)
-	tree << Node.new(right_child, name_node)
+    left_child = Node.new(array[0], name_node) 
+    right_child = Node.new(array[2], name_node)
+    node = Node.new(name_node, parent, left_child, right_child)
+	$tree << node
+	$tree << left_child
+	$tree << right_child
+	return node
   end
 
   if array.size > 3
     name_node = array[array.size/2]
 	left = array.slice(0,array.size/2)
 	right = array.slice(array.size/2 + 1, array.size)
-	left_child = left[left.size/2]
-	right_child = right[right.size/2]
-	tree << Node.new(name_node, parent, left_child, right_child)
-
-    build_tree(left, name_node, :left, tree)  
-    build_tree(right, name_node, :right, tree)
+	left_child = build_tree(left, name_node, :left, tree)
+	right_child = build_tree(right, name_node, :right, tree)
+	node = Node.new(name_node, parent, left_child , right_child )  
+    $tree << node	
+	return node
   end    
   
-  return tree
+  
 end
 
+
+
+def breadth_first_search(tree, value)
+  visited = []
+private
+  def found?(value, node)
+    node if value == node.value
+	node if node.childs[:left] == value
+  end  
+end
+
+
+
 #------
+$tree = []
 
 tree = build_tree([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], "root")
 puts
 puts "*************************************************************"
 puts
-tree.each do |i|
-  print "parent=#{i.parent} \t val=#{i.value}  \t chld   left=#{i.childs[:left]}    \t  right=#{i.childs[:right]}  "
+$tree.each do |i|
+  print "parent=#{i.parent} \t val=#{i.value}  \t chld   left=#{i.childs[:left].value unless i.childs[:left] == nil}    \t  right=#{i.childs[:right].value unless i.childs[:right] == nil}  "
   puts
 end
