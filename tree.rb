@@ -48,6 +48,8 @@ def build_tree(array, parent = nil, derection = nil, tree = [])
       right_child = array[1]	  
 	end
     tree << Node.new(name_node, parent, left_child, right_child)
+	tree << Node.new(left_child, name_node) unless left_child == nil
+	tree << Node.new(right_child, name_node) unless right_child == nil
   end
   
   if array.size == 3
@@ -55,6 +57,8 @@ def build_tree(array, parent = nil, derection = nil, tree = [])
     left_child = array[0]
     right_child = array[2]
     tree << Node.new(name_node, parent, left_child, right_child)
+	tree << Node.new(left_child, name_node)
+	tree << Node.new(right_child, name_node)
   end
 
   if array.size > 3
