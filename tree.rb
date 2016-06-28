@@ -1,7 +1,6 @@
 class Node
-  attr :value
-  attr :parent
-  attr :childs
+  attr_accessor :value, :parent, :childs
+
 
   def initialize(value, parent = nil, left_child = nil, right_child = nil)
     @value = value
@@ -34,7 +33,7 @@ class Node
   end
 end
 
-def build_tree(array, parent = nil, derection = nil)
+def build_tree(array, parent = nil, derection = nil, tree = [])
   print "#{array} size=#{array.size}  parent=#{parent} dir=#{derection}"
   puts
   
@@ -48,14 +47,14 @@ def build_tree(array, parent = nil, derection = nil)
       left_child = nil
       right_child = array[1]	  
 	end
-    $tree << Node.new(name_node, parent, left_child, right_child)
+    tree << Node.new(name_node, parent, left_child, right_child)
   end
   
   if array.size == 3
     name_node = array[1]
     left_child = array[0]
     right_child = array[2]
-    $tree << Node.new(name_node, parent, left_child, right_child)
+    tree << Node.new(name_node, parent, left_child, right_child)
   end
 
   if array.size > 3
@@ -64,22 +63,22 @@ def build_tree(array, parent = nil, derection = nil)
 	right = array.slice(array.size/2 + 1, array.size)
 	left_child = left[left.size/2]
 	right_child = right[right.size/2]
-	$tree << Node.new(name_node, parent, left_child, right_child)
+	tree << Node.new(name_node, parent, left_child, right_child)
 
-    build_tree(array.slice(0,array.size/2), name_node, :left)  
-    build_tree(array.slice(array.size/2 + 1, array.size), name_node, :right)
+    build_tree(left, name_node, :left, tree)  
+    build_tree(right, name_node, :right, tree)
   end    
   
-
+  return tree
 end
 
 #------
-$tree = []
-build_tree([1,2,3,4,5])
+
+tree = build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 puts
 puts "*************************************************************"
 puts
-$tree.each do |i|
+tree.each do |i|
   print "parent=#{i.parent} val=#{i.value} chlds #{i.childs} "
   puts
 end
