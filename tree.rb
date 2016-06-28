@@ -1,26 +1,38 @@
 class Node
-  def initialize
-    @value = {parents:[], childes:[]}
+  attr :value
+  attr :parents
+  attr :childs
+
+  def initialize(value)
+    @value = value
+    @parents = []
+    @childs = []
   end
 
   def get_parents
-    @value[:parents]
+    @parents
   end
 
   def get_childs
-    @value[:childes]
+    @childes
   end
 
   def set_parent=(value)
-    @value[:parents] << value
+    @parents << value
   end
 
   def set_child=(value)
-    @value[:childs] << value
+    @childs << value
   end
 end
 
-#-------------------test-------------
-test = Node.new
-test.set_parent= 3
-puts test.get_parents
+def build_tree(array)
+
+end
+
+#------
+
+test = Node.new(8)
+test.set_parent=5
+test.set_parent=6
+print test.parents
