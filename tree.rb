@@ -60,7 +60,7 @@ def build_tree(array, parent = nil, derection = nil)
 
   if array.size > 3
     name_node = array[array.size/2]
-	left = array.slice(0,array.size/2 - 1)
+	left = array.slice(0,array.size/2)
 	right = array.slice(array.size/2 + 1, array.size)
 	left_child = left[left.size/2]
 	right_child = right[right.size/2]
@@ -75,6 +75,11 @@ end
 
 #------
 $tree = []
-build_tree([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
-print $tree
+build_tree([1,2,3,4,5])
 puts
+puts "*************************************************************"
+puts
+$tree.each do |i|
+  print "parent=#{i.parent} val=#{i.value} chlds #{i.childs} "
+  puts
+end
