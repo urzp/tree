@@ -78,11 +78,11 @@ end
 
 #------
 
-tree = build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+tree = build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324], "root")
 puts
 puts "*************************************************************"
 puts
 tree.each do |i|
-  print "parent=#{i.parent} val=#{i.value} chlds #{i.childs} "
+  print "parent=#{i.parent} \t val=#{i.value}  \t chld   left=#{i.childs[:left]}    \t  right=#{i.childs[:right]}  "
   puts
 end
