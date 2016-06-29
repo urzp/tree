@@ -99,8 +99,30 @@ def breadth_first_search(tree, value)
   
 end
 
-def depth_first_search(tree, value)
+def depth_first_search(tree, root, value)
+  visited = {node: [], found: nil}
+  current = root
+  visited[:node] << current
+  
+  visit_node(current, visited, value)
+  return visited[:found]
+end
 
+def visit_node(current, visited, value)
+  if  visited[:found] == nil
+    if value == current.value 
+	  visited[:found] = current
+	end
+    
+  current.childs.each do |name, child|
+      if visited.any?{|i| i != child} and child != nil
+        visited[:node] << child
+		print "Parent=#{child.parent}  \t  node=#{child.value}" 
+		puts
+        visit_node(child, visited, value) 
+	  end
+  end
+ end
 end
 
 
@@ -123,4 +145,6 @@ tree = build_tree([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], "root")
 puts
 view_tree($tree)
 puts
-puts breadth_first_search($tree, 15).value
+#puts breadth_first_search($tree, 15).value
+found = depth_first_search($tree, $tree.last, 1)
+puts found
