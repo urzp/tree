@@ -79,11 +79,17 @@ def build_tree(array, parent = nil, derection = nil, tree = [])
   
 end
 
+def found?(value, node)
+    return node if value == node.value
+	return node.childs[:left] if node.childs[:left] != nil and node.childs[:left].value == value
+	return node.childs[:right] if node.childs[:right] != nil and node.childs[:right].value == value
+	return false
+end  
 
 
 def breadth_first_search(tree, value)
   visited = []
-  $tree.each do |node|
+  tree.each do |node|
     unless visited.any?{|i| i == node or i == node.get_left_child or i = node.get_right_child }
       return found?(value, node) if found?(value, node)
 	  visited << node
@@ -93,14 +99,21 @@ def breadth_first_search(tree, value)
   
 end
 
-def found?(value, node)
-    return node if value == node.value
-	return node.childs[:left] if node.childs[:left] != nil and node.childs[:left].value == value
-	return node.childs[:right] if node.childs[:right] != nil and node.childs[:right].value == value
-	return false
-end  
+def depth_first_search(tree, value)
+
+end
 
 
+
+def view_tree(tree)
+  puts "*************************************************************"
+  puts
+  
+  tree.each do |i|
+    print "parent=#{i.parent} \t val=#{i.value}  \t chld   left=#{i.childs[:left].value unless i.childs[:left] == nil}    \t  right=#{i.childs[:right].value unless i.childs[:right] == nil}  "
+    puts
+  end
+end
 
 
 #------
@@ -108,11 +121,6 @@ $tree = []
 
 tree = build_tree([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], "root")
 puts
-puts "*************************************************************"
-puts
-$tree.each do |i|
-  print "parent=#{i.parent} \t val=#{i.value}  \t chld   left=#{i.childs[:left].value unless i.childs[:left] == nil}    \t  right=#{i.childs[:right].value unless i.childs[:right] == nil}  "
-  puts
-end
+view_tree($tree)
 puts
 puts breadth_first_search($tree, 15).value
